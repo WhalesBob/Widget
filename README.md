@@ -18,3 +18,5 @@
   -실제로 배터리위젯 만든 사람의 예시
 + https://mrcle.tistory.com/3
   - 디자인 및 레이아웃 템플릿 오픈소스
++ https://travel-nomad.tistory.com/25
+  - sms 
