@@ -5,6 +5,9 @@
   - 필요한 것 : 
     - AppWidgetProviderInfo 객체
     - AppWidgetProvider 클래스 구현
+
++ https://darksilber.tistory.com/14?category=372671
+  - 안드로이드 위젯 개발 관련 블로그.
     
 + https://lktprogrammer.tistory.com/132
   - 리니어 레이아웃과 버튼
