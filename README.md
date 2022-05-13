@@ -10,3 +10,4 @@
 + https://developer.android.com/reference/android/os/BatteryManager?hl=ko
   - 배터리관련 클래스 및 메소드
   - https://abyser.tistory.com/87
+  - http://daplus.net/java-android%EC%97%90%EC%84%9C-%EB%B0%B0%ED%84%B0%EB%A6%AC-%EC%9E%94%EB%9F%89-%EB%B0%8F-%EC%83%81%ED%83%9C-%ED%99%95%EC%9D%B8/
