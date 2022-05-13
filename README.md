@@ -9,3 +9,4 @@
   - 리니어 레이아웃과 버튼
 + https://developer.android.com/reference/android/os/BatteryManager?hl=ko
   - 배터리관련 클래스 및 메소드
+  - https://abyser.tistory.com/87
