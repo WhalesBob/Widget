@@ -91,14 +91,14 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
     android:minResizeWidth="40dp"
     android:resizeMode="vertical|horizontal")
 
-    <!-- minResizeWidth 는 사용자가 위젯의 크기를 변경할 때
+    (!-- minResizeWidth 는 사용자가 위젯의 크기를 변경할 때
     사용하는 값이다. 변경할 때 이 크기보다 작아지진 않아야 한다는 것을 런처에게 알려준다.
      minWidth, minHeight 는 위젯을 홈화면에 추가할 때 사용하는 값이라고 한다. 이 값으로 홈
      화면에서 몇개의 셀이 할당될지 결정한다.
      resizeMode : 위젯의 크기 변경과 관련된 설정을 할 때 사용된다. 이 속성을 사용하면 홈 스크린에
      추가한 App Widget의 사이즈를 변경할 수 있게 된다. 홈 스크린에 위젯을 추가하고, 위젯을 오랫동안
      클릭할 때, 위젯의 크기를 변경할 수 있다. resizeMode 속성은, Horizontal/Vertical/None
-     세 가지 속성값을 가질 수 있다. vertical|horizontal 하면 둘 다 할 수 있다.-->
+     세 가지 속성값을 가질 수 있다. vertical|horizontal 하면 둘 다 할 수 있다.--)
 
 (/appwidget-provider)
 </code></pre>
