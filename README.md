@@ -105,7 +105,9 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
     android:minHeight="40dp"
     android:minWidth="110dp"
     android:minResizeWidth="40dp"
-    android:resizeMode="vertical|horizontal")
+    android:resizeMode="vertical|horizontal"
+    android:updatePeriodMillis="360000"
+    android:widgetCategory="home_screen")
 
     (!-- minResizeWidth 는 사용자가 위젯의 크기를 변경할 때
     사용하는 값이다. 변경할 때 이 크기보다 작아지진 않아야 한다는 것을 런처에게 알려준다.
@@ -114,8 +116,11 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
      resizeMode : 위젯의 크기 변경과 관련된 설정을 할 때 사용된다. 이 속성을 사용하면 홈 스크린에
      추가한 App Widget의 사이즈를 변경할 수 있게 된다. 홈 스크린에 위젯을 추가하고, 위젯을 오랫동안
      클릭할 때, 위젯의 크기를 변경할 수 있다. resizeMode 속성은, Horizontal/Vertical/None
-     세 가지 속성값을 가질 수 있다. vertical|horizontal 하면 둘 다 할 수 있다.--)
-
+     세 가지 속성값을 가질 수 있다. vertical|horizontal 하면 둘 다 할 수 있다.
+     updatePeriodMillis 에서는, 얼마나 자주 업데이트 해줄것인지 정한다고 한다.
+     widgetCategory 속성은, 앱 위젯을 홈 화면, 잠금 화면, 또는 둘 다에 표시할 수 있는지
+     여부를 선언하는 속성이라고 한다.
+     --)
 (/appwidget-provider)
 </code></pre>
 
