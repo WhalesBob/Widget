@@ -1,5 +1,29 @@
 # Widget
 
++ 위젯 만들 때 필요한 4가지 준비물
+
+  - AppWidgetProvider Class 상속받는 Provider Class
+    -  위젯은, 다른 곳에서 Providing 받아서 바탕화면에 구현되는 친구라고 생각하면 된다고 한다. 그래서 어디에서 제공 받아서 만드는 것이라 Provider Class가 따로 필요하다.
+
+  - Widget의 VIew Layout를 기술한 xml 파일
+    - 위젯의 Layout이라 해서 다를 것 없고, 그냥 레이아웃 만들어주듯이 하면 된다고 한다. (그냥 removteview에서 setOnClickPendingIntent만 다른 것이다)
+
+
+  - Widget의 속성을 기술한 xml 파일
+    - 위젯 속성 지정하는 xml파일이다. (최소 가로길이, 세로길이 지정, 위젯의 레이아웃 설정)
+    - /res/xml/ 디렉토리를 새로 파주고 (appwidget-provider) 태그 안에 넣어준다. 
+
+  - Widget Cell Size
+
+    - 위젯은 홈스크린의 일정 공간을 차지합니다. 홈스크린에서 위젯이 차지할 수 있는 공간은 홈스크린을 일정한 비율로 나눈 영역인 셀(Cell) 단위로 관리되며, 위젯의 크기는 셀을 몇 개 사용하느냐에 따라 결정됩니다. 일반적으로 안드로이드 단말에서 위젯이 차지할 수 있는 홈스크린 영역은 다음과 같이 가로 4개, 세로 4개 총 16개로 나누어집니다.
+
+  - Widget의 속성과 receiver를 정의하는 AndroidManifest.xml 파일
+
+    - 위젯의 속성과 기능을 사용할 수 있게 정의해놓은 xml 파일.
+    - 위젯을 사용하기 위해서는 (receiver) 안에 (meta-data)를 추가해 줘야 한다.
+    - android:resource="@xml/widget_configuration"/> -> 3에서 나오는 친구 등록.
+
+
 + 위젯 만드는 방법 flow 
   - com.example.[프로젝트이름] 우클릭 이후, 새로 Java Class 만들기. 
   - 이름에 AppWidgetProvider 집어넣기. ex) ExampleAppWidgetProvider
