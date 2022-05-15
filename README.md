@@ -46,6 +46,9 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
   
 </code></pre>  
 
++ https://arabiannight.tistory.com/entry/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9CAndroid-App-widget%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4-%EB%B3%B4%EC%9E%90-1
+  - 위젯 만들기에 나오는 다른 사이트. 
+
 + https://developer.android.com/guide/topics/appwidgets?hl=ko 
   - 안드로이드 개발자 사이트 정보 정리
   - 필요한 것 : 
