@@ -82,13 +82,14 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
 3. /res/xml 파일에 만들어주는, widget_configuration xml 파일
 
 <pre><code>
-<?xml version="1.0" encoding="utf-8"?>
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+
+(?xml version="1.0" encoding="utf-8"?)
+(appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/example_widget"
     android:minHeight="40dp"
     android:minWidth="110dp"
     android:minResizeWidth="40dp"
-    android:resizeMode="vertical|horizontal">
+    android:resizeMode="vertical|horizontal")
 
     <!-- minResizeWidth 는 사용자가 위젯의 크기를 변경할 때
     사용하는 값이다. 변경할 때 이 크기보다 작아지진 않아야 한다는 것을 런처에게 알려준다.
@@ -99,7 +100,7 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
      클릭할 때, 위젯의 크기를 변경할 수 있다. resizeMode 속성은, Horizontal/Vertical/None
      세 가지 속성값을 가질 수 있다. vertical|horizontal 하면 둘 다 할 수 있다.-->
 
-</appwidget-provider>
+(/appwidget-provider)
 </code></pre>
 
 + https://arabiannight.tistory.com/entry/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9CAndroid-App-widget%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4-%EB%B3%B4%EC%9E%90-1
