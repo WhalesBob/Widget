@@ -1,4 +1,7 @@
 # Widget
++ (안드로이드 개발에서의 배경지식들)
+  - https://sharp57dev.tistory.com/18 
+    - Intent에 관한 설명들. Intent는 안드로이드 내 각 메인 속성들의 연결케이블 역할을 수행한다.
 
 + 위젯 만들 때 필요한 4가지 준비물
 
@@ -43,10 +46,23 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // 앱위젯에서 처음에 업데이트 되는 것이나, 정기적으로 업데이트 될 때 호출되는 메소드이다.
-        //
+        // 파라미터 설명
+        // Context context : 안드로이드 어플리케이션을 개발하면서, 가장 빈번하게 사용되는 클래스 중 하나라고 한다.
+        // context 란, 어플리케이션 "환경" 에 관한 전역 정보에 접근하기 위한 "인터페이스" 라고 한다. Abstract Class이며,
+        // 실제 구현은 안드로이드 시스템에 의해 제공된다. Context 를 통해, 어플리케이션에 특화된 리소스나 클래스에 접근 가능하며,
+        // "어플리케이션 레벨" 의 작업(Activity 실행, Intent BroadCasting, Intent 수신 등을 수행하기 위한 API 호출 가능.)
+
+        // 정리하자면, Context 는
+        // 1. 어플리케이션에 관해, 시스템이 관리하고 있는 정보에 접근하기
+        // 2. 안드로이드 시스템 서비스에서 제공하는 API를 호출할 수 있는 기능 을 한다.
         for(int appWidgetID : appWidgetIds){
             Intent intent = new Intent(context,MainActivity.class); // Intent. 수행할 때 사용하는
             // 애라고 생각하면 편할듯.
+            // Intent 는, 안드로이드 개발의 4대 Component 라고 불리는, Activity/Service/Broadcast Receiver/Content Provider
+            // 이 각각의 Component 간의 통신을 담당한다고 한다.
+
+            // ex : Intent intent = new Intent(A_Activity_this, B_Activity_class)
+            // A_Activity(현재)에서, 다른 Activity(B_Activity)를 호출할 때 사용된다. 화면전환시 사용된다.
             PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
             // PendingIntent 란, 가지고 있는 "Intent"를 당장 수행하지는 않고, 특정 시점에 수행하도록 하는 특징이 있다.
             // 특정 시점은, 보통 해당 앱이 구동되고 있지 않을 때이다. 주로 다른 것을 실행하고 있을 때, 푸시알림으로 Intent
