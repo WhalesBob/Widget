@@ -95,6 +95,24 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
   
 </code></pre>  
 
+2. View Layout 구현하는 xml 파일. /res/layout 디렉토리에 저장된다.
+
+<pre><code>
+(?xml version="1.0" encoding="utf-8"?)
+(RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent")
+    
+    (Button
+        android:id="@+id/example_widget_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Press me"/)
+(/RelativeLayout)
+
+</code></pre>
+
 3. /res/xml 파일에 만들어주는, widget_configuration xml 파일
 
 <pre><code>
