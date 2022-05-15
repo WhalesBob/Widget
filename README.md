@@ -206,3 +206,7 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
   - 디자인 및 레이아웃 템플릿 오픈소스
 + https://travel-nomad.tistory.com/25
   - sms 
++ https://devncj.tistory.com/41
+  - 와이파이 이름 출력
++ https://techlog.gurucat.net/65
+  - 와이파이 연결/해제  
