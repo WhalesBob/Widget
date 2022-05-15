@@ -142,6 +142,44 @@ public class ExampleAppWIdgetProvider extends AppWidgetProvider {
 (/appwidget-provider)
 </code></pre>
 
+4. AndroidManifest 파일
+
+<pre><code>
+(?xml version="1.0" encoding="utf-8"?)
+(manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.exercise")
+
+    (application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Exercise")
+        (activity
+            android:name=".MainActivity"
+            android:exported="true")
+            (intent-filter)
+                (action android:name="android.intent.action.MAIN" /)
+
+                (category android:name="android.intent.category.LAUNCHER" /)
+            (/intent-filter)
+        (/activity)
+
+        (receiver // 여기서부터 리시버 들어간다. 
+            android:name=".ExampleAppWIdgetProvider"
+            android:exported="true")
+            (intent-filter)
+                (action android:name="android.appwidget.action.APPWIDGET_UPDATE" /)
+            (/intent-filter)
+            (meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/example_appwidget_info" /)
+        (/receiver)
+    (/application)
+
+(/manifest)
+
+</code></pre>
 + https://arabiannight.tistory.com/entry/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9CAndroid-App-widget%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%96%B4-%EB%B3%B4%EC%9E%90-1
   - 위젯 만들기에 나오는 다른 사이트. 
 
