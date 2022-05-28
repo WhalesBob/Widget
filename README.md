@@ -1,4 +1,4 @@
-# Widget
+# Widget 만들기
 + (안드로이드 개발에서의 배경지식들)
   - https://sharp57dev.tistory.com/18 
     - Intent에 관한 설명들. Intent는 안드로이드 내 각 메인 속성들의 연결케이블 역할을 수행한다.
