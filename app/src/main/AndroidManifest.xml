@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".AppWidgetProvider"
+            android:name=".AWProvider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -27,5 +27,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_configuration"/>
         </receiver>
+        <service android:name=".BatteryService"></service>
     </application>
 </manifest>
