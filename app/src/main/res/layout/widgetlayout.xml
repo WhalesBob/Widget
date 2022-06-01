@@ -4,8 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:background="@android:color/transparent"
     android:padding="10dp">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginBottom="2dp"
-            android:background="#ffffff"
+            android:background="@drawable/border"
             android:gravity="center"
             android:padding="3dp"
             android:text="BATTERY"
