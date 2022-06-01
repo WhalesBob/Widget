@@ -1,5 +1,9 @@
 package com.example.widgetproject;
 
+import android.app.KeyguardManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -8,47 +12,71 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 public class BatteryService extends Service {
+    private static BroadcastReceiver screenOffReceiver;
+    private static BroadcastReceiver screenOnReceiver;
+    private static BroadcastReceiver userPresentReceiver;
 
-    public int onStartCommand(Intent intent, int flags, int startID){
-        super.onStartCommand(intent,flags,startID);
-        IntentFilter filter = new IntentFilter();
-
-        filter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(mBRBattery,filter);
-        return START_STICKY;
-    }
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
-    public void onDestroy(){
-        super.onDestroy();
-        unregisterReceiver(mBRBattery);
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        registerScreenOffReceiver();
+        registerScreenOnReceiver();
+        registerUserPresentReceiver();
     }
 
-    BroadcastReceiver mBRBattery = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(action.equals(Intent.ACTION_BATTERY_CHANGED)){
-                int current, max, percent;
-                current = intent.getIntExtra(BatteryManager.EXTRA_LEVEL,100);
-                max = intent.getIntExtra(BatteryManager.EXTRA_SCALE,0);
-                percent = current * 100 / max;
+    public void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(screenOffReceiver);
+        unregisterReceiver(screenOnReceiver);
+        unregisterReceiver(userPresentReceiver);
+    }
 
-                RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.widgetlayout);
-                views.setTextViewText(R.id.battery,"" + percent + "%");
-                AppWidgetManager wm = AppWidgetManager.getInstance(BatteryService.this);
-                ComponentName widget = new ComponentName(context, AWProvider.class);
-                wm.updateAppWidget(widget,views);
+    private void registerScreenOffReceiver(){
+        Log.v("test","registerScreenOff");
+        screenOffReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                AWProvider.turnAlarmOnOff(context,false);
             }
-        }
-    };
+        };
+        registerReceiver(screenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+    }
+    private void registerScreenOnReceiver(){
+        Log.v("test","registerScreenOn");
+        screenOnReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+                if(!keyguardManager.inKeyguardRestrictedInputMode()){
+                    AWProvider.turnAlarmOnOff(context,true);
+                }
+            }
+        };
+        registerReceiver(screenOnReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
+    }
+    private void registerUserPresentReceiver(){
+        Log.v("test","registerUserPresent");
+        userPresentReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                AWProvider.turnAlarmOnOff(context,true);
+            }
+        };
+        registerReceiver(userPresentReceiver,new IntentFilter(Intent.ACTION_USER_PRESENT));
+    }
 }
