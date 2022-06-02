@@ -12,12 +12,16 @@ import android.os.BatteryManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.TextClock;
 
+import java.util.Calendar;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class AWProvider extends AppWidgetProvider {
     private static final String ACTION_BATTERY_UPDATE = "com.example.widgetproject.action.UPDATE";
     private static int batteryLevel = 0;
+    private static String time = "";
     @Override
     public void onEnabled(Context context) { // 위젯 키면 나타나는 애.
         super.onEnabled(context);
@@ -33,14 +37,16 @@ public class AWProvider extends AppWidgetProvider {
         super.onUpdate(context,appWidgetManager,appWidgetIds);
         Log.v("test","onUpdate()");
 
-        // Timer timer = new Timer();
-        // timer.scheduleAtFixedRate(new GetTime(context,appWidgetManager),1,1000);
+//        Timer timer = new Timer();
+//        timer.scheduleAtFixedRate(new GetTime(context,appWidgetManager),1,1000);
 
         for(int id : appWidgetIds){
             Intent intent = new Intent(context,MainActivity.class);
             int currentLevel = calculateBatteryLevel(context);
-            if(batteryChanged(currentLevel)){
+            String currentTime = getTime();
+            if(batteryChanged(currentLevel) || timeChanged(currentTime)){
                 batteryLevel = currentLevel;
+                time = currentTime;
             }
             updateViews(context,intent,false);
         }
@@ -52,9 +58,11 @@ public class AWProvider extends AppWidgetProvider {
         Log.v("test","onReceive()");
         if(intent.getAction().equals(ACTION_BATTERY_UPDATE)){
             int currentLevel = calculateBatteryLevel(context);
-            if(batteryChanged(currentLevel)){
+            String currentTime = getTime();
+            if(batteryChanged(currentLevel) || timeChanged(currentTime)){
                 Log.v("test","Battery Changed!");
                 batteryLevel = currentLevel;
+                time = currentTime;
                 updateViews(context,intent,false);
             }
         }
@@ -75,15 +83,17 @@ public class AWProvider extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         if(turnOn){
-            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000,5 * 1000, pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000,60 * 1000, pendingIntent);
             Log.v("test","Alarm Set");
             int currentLevel = calculateBatteryLevel(context);
-            if(batteryChanged(currentLevel)){
-                Log.v("test","Battery Changed!");
+            String currentTime = getTime();
+            if(batteryChanged(currentLevel) || timeChanged(currentTime)){
+                Log.v("test","Something Changed!");
                 batteryLevel = currentLevel;
+                time = currentTime;
                 updateViews(context,intent,true);
             }else{
-                Log.v("test","Battery is not Changed");
+                Log.v("test","Something is not Changed");
             }
         }else{
             alarmManager.cancel(pendingIntent);
@@ -106,9 +116,10 @@ public class AWProvider extends AppWidgetProvider {
     private static void updateViews(Context context,Intent intent,boolean fromAlarm){
 
         Log.v("test","updateViews()");
+
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widgetlayout);
         views.setTextViewText(R.id.battery, batteryLevel + "%");
-
+        views.setTextViewText(R.id.SWETClock, time);
         if(!fromAlarm){
             PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
 
@@ -121,4 +132,15 @@ public class AWProvider extends AppWidgetProvider {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetManager.updateAppWidget(componentName,views);
     }
+    private static String getTime(){ // 시간을 받아오는 함수.
+        Calendar now = Calendar.getInstance();
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+        int minute = now.get(Calendar.MINUTE);
+        return hour + ":" + minute;
+    }
+    private static boolean timeChanged(String currentTimeLeft){
+        Log.v("test","Check Time Change");
+        return (!time.equals(currentTimeLeft));
+    }
 }
+
