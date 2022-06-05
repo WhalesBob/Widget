@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/message_cancle_button">
+
+    <TextView
+        android:id="@+id/txt_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:text="To. 대상 없음"
+        />
+
+    <EditText
+        android:id="@+id/et_sendingtxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="8pt"
+        android:hint="보낼 메세지를 입력하세요"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cc7700"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_send_message"
+            android:layout_width="205dp"
+            android:layout_height="50dp"
+            android:background="#cc7700"
+            android:text="문자 보내기"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#cc7700"
+            />
+
+        <Button
+            android:id="@+id/btn_cancel_message"
+            android:layout_width="205dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/message_cancle_button"
+            android:textColor="#cc7700"
+            android:text="취소"
+            android:onClick="mOnClose"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
