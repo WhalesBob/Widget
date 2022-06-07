@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10pt"
-        android:text="최근 10일간 읽지 않은 문자가 없습니다."
+        android:text="문자가 없습니다."
         />
 
     <View
@@ -54,7 +54,7 @@
             android:background="#66ff66"
             android:textColor="#000000"
             android:text="답장하기"
-            android:onClick="mOnPopupClick"
+
             />
         <View
             android:layout_width="1dp"
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="10pt"
-            android:text="최근 10일간 읽지 않은 문자가 없습니다."
+            android:text="문자가 없습니다."
             />
 
         <View
@@ -113,7 +113,7 @@
                 android:background="#66ff66"
                 android:textColor="#000000"
                 android:text="답장하기"
-                android:onClick="mOnPopupClick"
+
                 />
             <View
                 android:layout_width="1dp"
@@ -128,7 +128,7 @@
                 android:textColor="#000000"
                 android:text="확인"
                 android:layout_gravity="right"
-                android:onClick="mOnClose"
+                android:onClick="mOnClosed"
                 />
         </LinearLayout>
 
@@ -137,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="10pt"
-            android:text="최근 10일간 읽지 않은 문자가 없습니다."
+            android:text="문자가 없습니다."
             />
 
         <View
@@ -172,7 +172,7 @@
                 android:background="#66ff66"
                 android:textColor="#000000"
                 android:text="답장하기"
-                android:onClick="mOnPopupClick"
+
                 />
             <View
                 android:layout_width="1dp"
@@ -187,7 +187,7 @@
                 android:textColor="#000000"
                 android:text="확인"
                 android:layout_gravity="right"
-                android:onClick="mOnClose"
+                android:onClick="mOnClosed"
                 />
         </LinearLayout>
 
@@ -196,7 +196,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="10pt"
-            android:text="최근 10일간 읽지 않은 문자가 없습니다."
+            android:text="문자가 없습니다."
             />
 
         <View
@@ -231,7 +231,6 @@
                 android:background="#66ff66"
                 android:textColor="#000000"
                 android:text="답장하기"
-                android:onClick="mOnPopupClick"
                 />
             <View
                 android:layout_width="1dp"
@@ -246,7 +245,7 @@
                 android:textColor="#000000"
                 android:text="확인"
                 android:layout_gravity="right"
-                android:onClick="mOnClose"
+                android:onClick="mOnClosed"
                 />
         </LinearLayout>
 
@@ -255,7 +254,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="10pt"
-            android:text="최근 10일간 읽지 않은 문자가 없습니다."
+            android:text="문자가 없습니다."
             />
 
         <View
@@ -290,7 +289,6 @@
                 android:background="#66ff66"
                 android:textColor="#000000"
                 android:text="답장하기"
-                android:onClick="mOnPopupClick"
                 />
             <View
                 android:layout_width="1dp"
@@ -305,7 +303,7 @@
                 android:textColor="#000000"
                 android:text="확인"
                 android:layout_gravity="right"
-                android:onClick="mOnClose"
+                android:onClick="mOnClosed"
                 />
         </LinearLayout>
     </LinearLayout>

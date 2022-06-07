@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="#ffff00"
-        android:onClick="mOnPopupClick"
         android:text="TM"
         android:textSize="60sp"
         />

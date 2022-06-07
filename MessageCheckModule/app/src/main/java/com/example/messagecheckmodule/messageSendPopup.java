@@ -34,9 +34,11 @@ public class messageSendPopup extends Activity {
         btn_send_message = (Button)findViewById(R.id.btn_send_message);
 
         Intent intent = getIntent();
-        String messageTo = intent.getStringExtra("missedMessageNum");
-
-        String messageToTxt = setTxtPhNum(messageTo);
+        String messageTo = intent.getStringExtra("btn_from");
+        int count = Integer.parseInt(messageTo);
+        String messageNum = "message"+count;
+        String phNum = intent.getStringExtra(messageNum);
+        String messageToTxt = setTxtPhNum(phNum);
         txt_to.setText(messageToTxt);
 
 
