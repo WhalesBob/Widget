@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             if(dir.equals("MISSED"))
             {
                 Log.v("test", "missed call detected");
-                sb.append("\n부재중 전화:\n전화번호: ").append(phNumber).append("\n날짜: ").append(callDayTime);
+                sb.append("\n부재중 전화:\n전화번호: ").append(phNumber).append("\n날짜: ").append(DM.DateSimplifier(callDayTime));
                 sb.append("\n");
 
                 break;
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         CheckMissed CM = new CheckMissed();
         DateModule DM = new DateModule();
 
-        Cursor managedCursor = managedQuery(CallLog.Calls.CONTENT_URI, null, null, null, null);
+        Cursor managedCursor = getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, null);
 
         int number = managedCursor.getColumnIndex(CallLog.Calls.NUMBER);
         int type = managedCursor.getColumnIndex(CallLog.Calls.TYPE);
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             dir = "default";
             count++;
 
-            Log.v("test", "counted: " + Integer.toString(count));
+            Log.v("test", "counted: " + count);
 
 
             if(!DM.compareDay(callTodayDate))//최근 10일 내에 부재중 전화가 없을 시
@@ -260,5 +260,12 @@ class DateModule {
        }
        else
            return false;
+    }
+
+    String DateSimplifier(Date callDate) {
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd E", Locale.KOREA);
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm a", Locale.KOREA);
+        String simpleDate = ""+dateFormat1.format(callDate)+"요일  "+dateFormat2.format(callDate);
+        return simpleDate;
     }
 }
