@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static android.Manifest.permission.READ_CALL_LOG;
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private String getCallLog() {//가장 최근의 부재중 전화 정보를 전화번호, 날짜 등을 포함한 String 형태로 받아 오는 함수
         Log.v("test", "getCallLog()");
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         CheckMissed CM = new CheckMissed();
         DateModule DM = new DateModule();
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             dir = "default";
 
-            if(DM.compareDay(callDate))//만약 10일 이내의 통화 기록에서
+            if(!DM.compareDay(callDayTime))//만약 10일 이내의 통화 기록에서 부재중 전화가 없을 경우
             {
                 Log.v("test","no missed calls in 10 days");
                 break;
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     private String getphNumber() {//가장 최근의 부재중 전화의 전화번호를 받아와 전화를 걸 수 있는 형식의 String으로 돌려 받는 함수
         Log.v("test", "getphNumber()");
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         CheckMissed CM = new CheckMissed();
         DateModule DM = new DateModule();
 
@@ -130,14 +131,20 @@ public class MainActivity extends AppCompatActivity {
         int type = managedCursor.getColumnIndex(CallLog.Calls.TYPE);
         int date = managedCursor.getColumnIndex(CallLog.Calls.DATE);
         String dir = "default";
+        int count = 0;
 
         while(managedCursor.moveToNext()) {
             String phNumber = managedCursor.getString(number);
             String callType = managedCursor.getString(type);
             String callDate = managedCursor.getString(date);
+            Date callTodayDate = new Date(Long.valueOf(callDate));
             dir = "default";
+            count++;
 
-            if(DM.compareDay(callDate))//최근 10일 내에 부재중 전화가 없을 시
+            Log.v("test", "counted: " + Integer.toString(count));
+
+
+            if(!DM.compareDay(callTodayDate))//최근 10일 내에 부재중 전화가 없을 시
             {
                 Log.v("test","no missed calls for last 10 days");
                 break;
@@ -179,14 +186,21 @@ class CheckMissed {
 
 class DateModule {
     String getTodayDate (){//오늘의 날짜 자료를 생성해내는 함수
+        Log.v("test", "getTodayDate-void");
         Date today = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        return dateFormat.format(today);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
+        String gotTodayDate = ""+dateFormat.format(today);
+        Log.v("test", gotTodayDate);
+        return gotTodayDate;
     }
 
-    String getTodayDate (String callDate){//입력 받은 자료의 날짜 자료를 생성해내는 함수. Overloading
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        return dateFormat.format(callDate);
+    String getTodayDate (Date callDate){//입력 받은 자료의 날짜 자료를 생성해내는 함수. Overloading
+        Log.v("test", "getTodayDate-String");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
+        String gotTodayDate = ""+dateFormat.format(callDate);
+        Log.v("test", gotTodayDate);
+        return gotTodayDate;
     }
 
     int getDay (String Date){//입력된 자료에서 일을 분리해내는 함수
@@ -215,10 +229,11 @@ class DateModule {
                 day = 30 + day;
         }
 
+        Log.v("test", Integer.toString(day));
         return day;
     }
 
-    boolean compareDay (String callDate)//최근 10일 내의 통화기록인지 확인하여 10일 내라면 true값을, 아니라면 false 값을 반환한다.
+    boolean compareDay (Date callDate)//최근 10일 내의 통화기록인지 확인하여 10일 내라면 true값을, 아니라면 false 값을 반환한다.
     {
         Log.v("test", "compareDay()");
 
@@ -234,10 +249,13 @@ class DateModule {
        Log.v("test", "target day: "+target_date_day);
        Log.v("test", "standard date: "+standard_date_month+"/"+standard_date_day);
 
-       if(standard_date_month<target_date_month)
+       if(standard_date_month<target_date_month) {
+           Log.v("test", "no error here");
            return true;
+       }
        else if(standard_date_month == target_date_month)
        {
+           Log.v("test", "there is no error here");
            return standard_date_day <= target_date_day;
        }
        else
