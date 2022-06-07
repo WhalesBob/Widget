@@ -9,19 +9,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.TextClock;
+
+import com.example.widgetproject.missedCallCheckDirectory.CallCheck;
 
 import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Locale;
 
 public class AWProvider extends AppWidgetProvider {
     private static final String ACTION_BATTERY_UPDATE = "com.example.widgetproject.action.UPDATE";
     private static int batteryLevel = 0;
     private static String time = "";
+
     @Override
     public void onEnabled(Context context) { // 위젯 키면 나타나는 애.
         super.onEnabled(context);
@@ -37,18 +39,16 @@ public class AWProvider extends AppWidgetProvider {
         super.onUpdate(context,appWidgetManager,appWidgetIds);
         Log.v("test","onUpdate()");
 
-//        Timer timer = new Timer();
-//        timer.scheduleAtFixedRate(new GetTime(context,appWidgetManager),1,1000);
-
         for(int id : appWidgetIds){
-            Intent intent = new Intent(context,MainActivity.class);
+            Intent missedCallCheckIntent = new Intent(context, CallCheck.class);
+            Intent intent = new Intent(context,MainActivity.class); // 여기서 MainActivity.class 를 받아서 Intent 를 생성함.
             int currentLevel = calculateBatteryLevel(context);
             String currentTime = getTime();
             if(batteryChanged(currentLevel) || timeChanged(currentTime)){
                 batteryLevel = currentLevel;
                 time = currentTime;
             }
-            updateViews(context,intent,false);
+            updateViews(context,intent,missedCallCheckIntent,false);
         }
     }
 
@@ -56,6 +56,7 @@ public class AWProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         Log.v("test","onReceive()");
+        Intent missedCallCheckIntent = new Intent(context, CallCheck.class);
         if(intent.getAction().equals(ACTION_BATTERY_UPDATE)){
             int currentLevel = calculateBatteryLevel(context);
             String currentTime = getTime();
@@ -63,7 +64,7 @@ public class AWProvider extends AppWidgetProvider {
                 Log.v("test","Battery Changed!");
                 batteryLevel = currentLevel;
                 time = currentTime;
-                updateViews(context,intent,false);
+                updateViews(context,intent,missedCallCheckIntent,false);
             }
         }
     }
@@ -80,7 +81,13 @@ public class AWProvider extends AppWidgetProvider {
     public static void turnAlarmOnOff(Context context, boolean turnOn){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(Intent.ACTION_BATTERY_CHANGED);
+        Intent missedCallCheckIntent = new Intent(context, CallCheck.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+//        if(Build.VERSION.SDK_INT >= 32){
+//            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_MUTABLE);
+//        }else{
+//            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+//        }
 
         if(turnOn){
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000,60 * 1000, pendingIntent);
@@ -91,7 +98,7 @@ public class AWProvider extends AppWidgetProvider {
                 Log.v("test","Something Changed!");
                 batteryLevel = currentLevel;
                 time = currentTime;
-                updateViews(context,intent,true);
+                updateViews(context,intent,missedCallCheckIntent,true);
             }else{
                 Log.v("test","Something is not Changed");
             }
@@ -113,7 +120,7 @@ public class AWProvider extends AppWidgetProvider {
         Log.v("test","Check Battery Change");
         return (batteryLevel != currentLevelLeft);
     }
-    private static void updateViews(Context context,Intent intent,boolean fromAlarm){
+    private static void updateViews(Context context,Intent intent,Intent missedCallCheckIntent, boolean fromAlarm){
 
         Log.v("test","updateViews()");
 
@@ -122,8 +129,9 @@ public class AWProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.SWETClock, time);
         if(!fromAlarm){
             PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
+            PendingIntent missedCallPendingIntent = PendingIntent.getActivity(context,0,missedCallCheckIntent, PendingIntent.FLAG_IMMUTABLE);
 
-            views.setOnClickPendingIntent(R.id.topLeftButton,pendingIntent);
+            views.setOnClickPendingIntent(R.id.topLeftButton,missedCallPendingIntent);
             views.setOnClickPendingIntent(R.id.topMiddleButton,pendingIntent);
             views.setOnClickPendingIntent(R.id.topRightButton,pendingIntent);
         }
@@ -136,11 +144,11 @@ public class AWProvider extends AppWidgetProvider {
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
         int minute = now.get(Calendar.MINUTE);
-        return hour + ":" + minute;
+        String minFormat = (minute < 10) ? String.format(Locale.KOREA,"0%d",minute) : Integer.toString(minute);
+        return hour + ":" + minFormat;
     }
     private static boolean timeChanged(String currentTimeLeft){
         Log.v("test","Check Time Change");
         return (!time.equals(currentTimeLeft));
     }
 }
-
