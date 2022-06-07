@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <TextView
-        android:id="@+id/txtView"
+        android:id="@+id/message_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10pt"
@@ -21,7 +29,7 @@
         />
 
     <TextView
-        android:id="@+id/txt_msgbody"
+        android:id="@+id/msgbody_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10pt"
@@ -40,7 +48,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_msg_to"
+            android:id="@+id/btn_msg_to_1"
             android:layout_width="205dp"
             android:layout_height="50dp"
             android:background="#66ff66"
@@ -54,7 +62,7 @@
             android:background="#666666"
             />
         <Button
-            android:id="@+id/btn_cut_widget"
+            android:id="@+id/btn_cut_widget_1"
             android:layout_width="205dp"
             android:layout_height="50dp"
             android:background="#ff6666"
@@ -64,5 +72,243 @@
             android:onClick="mOnClose"
             />
     </LinearLayout>
+
+        <TextView
+            android:id="@+id/message_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="최근 10일간 읽지 않은 문자가 없습니다."
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#666666"
+            />
+
+        <TextView
+            android:id="@+id/msgbody_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="문자 내용이 없습니다."
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#666666"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_msg_to_2"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:background="#66ff66"
+                android:textColor="#000000"
+                android:text="답장하기"
+                android:onClick="mOnPopupClick"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#666666"
+                />
+            <Button
+                android:id="@+id/btn_cut_widget_2"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:background="#ff6666"
+                android:textColor="#000000"
+                android:text="확인"
+                android:layout_gravity="right"
+                android:onClick="mOnClose"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/message_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="최근 10일간 읽지 않은 문자가 없습니다."
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#666666"
+            />
+
+        <TextView
+            android:id="@+id/msgbody_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="문자 내용이 없습니다."
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#666666"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_msg_to_3"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:background="#66ff66"
+                android:textColor="#000000"
+                android:text="답장하기"
+                android:onClick="mOnPopupClick"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#666666"
+                />
+            <Button
+                android:id="@+id/btn_cut_widget_3"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:background="#ff6666"
+                android:textColor="#000000"
+                android:text="확인"
+                android:layout_gravity="right"
+                android:onClick="mOnClose"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/message_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="최근 10일간 읽지 않은 문자가 없습니다."
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#666666"
+            />
+
+        <TextView
+            android:id="@+id/msgbody_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="문자 내용이 없습니다."
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#666666"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_msg_to_4"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:background="#66ff66"
+                android:textColor="#000000"
+                android:text="답장하기"
+                android:onClick="mOnPopupClick"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#666666"
+                />
+            <Button
+                android:id="@+id/btn_cut_widget_4"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:background="#ff6666"
+                android:textColor="#000000"
+                android:text="확인"
+                android:layout_gravity="right"
+                android:onClick="mOnClose"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/message_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="최근 10일간 읽지 않은 문자가 없습니다."
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#666666"
+            />
+
+        <TextView
+            android:id="@+id/msgbody_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:text="문자 내용이 없습니다."
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#666666"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_msg_to_5"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:background="#66ff66"
+                android:textColor="#000000"
+                android:text="답장하기"
+                android:onClick="mOnPopupClick"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="#666666"
+                />
+            <Button
+                android:id="@+id/btn_cut_widget_5"
+                android:layout_width="205dp"
+                android:layout_height="50dp"
+                android:background="#ff6666"
+                android:textColor="#000000"
+                android:text="확인"
+                android:layout_gravity="right"
+                android:onClick="mOnClose"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

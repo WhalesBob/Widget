@@ -20,6 +20,7 @@ import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -206,13 +207,15 @@ class CheckMissed {
 class DateModule {
     String getTodayDate (){//오늘의 날짜 자료를 생성해내는 함수
         Date today = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        return dateFormat.format(today);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
+        String simpleDate = dateFormat.format(today);
+        return simpleDate;
     }
 
-    String getTodayDate (String msDate){//입력 받은 자료의 날짜 자료를 생성해내는 함수. Overloading
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        return dateFormat.format(msDate);
+    String getTodayDate (Date msDate){//입력 받은 자료의 날짜 자료를 생성해내는 함수. Overloading
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd",Locale.KOREA);
+        String simpleDate = dateFormat.format(msDate);
+        return simpleDate;
     }
 
     int getDay (String Date){//입력된 자료에서 일을 분리해내는 함수
@@ -244,7 +247,7 @@ class DateModule {
         return day;
     }
 
-    boolean compareDay (String msDate)//최근 10일 내의 통화기록인지 확인하여 10일 내라면 true값을, 아니라면 false 값을 반환한다.
+    boolean compareDay (Date msDate)//최근 10일 내의 통화기록인지 확인하여 10일 내라면 true값을, 아니라면 false 값을 반환한다.
     {
         Log.v("test", "compareDay()");
 
