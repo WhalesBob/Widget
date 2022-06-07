@@ -175,7 +175,6 @@ public class callcheckpopup extends Activity {
         Log.v("test", "mOnClose()");
         moveTaskToBack(true);
         finishAndRemoveTask();
-        System.exit(0);
     }
 
     void phoneCall(String phNum)//전해받은 전화번호로 전화를 거는 함수
