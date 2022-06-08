@@ -19,8 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".missedCallCheckDirectory.CallCheck"
-            />
+        <activity android:name=".missedCallCheckDirectory.CallCheck" />
+        <activity android:name=".soundDirectory.SoundActivity" />
+
         <receiver
             android:name=".AWProvider"
             android:exported="true">
