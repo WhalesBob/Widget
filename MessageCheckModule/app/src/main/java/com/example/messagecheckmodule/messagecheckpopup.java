@@ -4,7 +4,6 @@ import static android.Manifest.permission.READ_SMS;
 import static android.Manifest.permission.SEND_SMS;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -36,11 +35,17 @@ public class messagecheckpopup extends Activity {
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.v("test", "popup 성공");
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 바 제거
         setContentView(R.layout.messagecheckpopup);
 
+        if(!checkPermission()) {
+            Log.v("test", "no per");
+            requestPermission();
+        }
+        else
+        {
+            Log.v("test", "yes per");
+        }
         Intent sending = backgroundMain();
 
         sendTextBtn1 = (Button)findViewById(R.id.btn_msg_to_1);
@@ -49,11 +54,11 @@ public class messagecheckpopup extends Activity {
         sendTextBtn4 = (Button)findViewById(R.id.btn_msg_to_4);
         sendTextBtn5 = (Button)findViewById(R.id.btn_msg_to_5);
 
-        sendTextBtn1.setOnClickListener(view -> mOnPopupClick(view,1,sending));
-        sendTextBtn2.setOnClickListener(view -> mOnPopupClick(view,2,sending));
-        sendTextBtn3.setOnClickListener(view -> mOnPopupClick(view,3,sending));
-        sendTextBtn4.setOnClickListener(view -> mOnPopupClick(view,4,sending));
-        sendTextBtn5.setOnClickListener(view -> mOnPopupClick(view,5,sending));
+        sendTextBtn1.setOnClickListener(view -> mOnPopupClick(1,sending));
+        sendTextBtn2.setOnClickListener(view -> mOnPopupClick(2,sending));
+        sendTextBtn3.setOnClickListener(view -> mOnPopupClick(3,sending));
+        sendTextBtn4.setOnClickListener(view -> mOnPopupClick(4,sending));
+        sendTextBtn5.setOnClickListener(view -> mOnPopupClick(5,sending));
 
     }
 
@@ -69,6 +74,7 @@ public class messagecheckpopup extends Activity {
     }
 
     private Intent backgroundMain() {
+        Log.v("test", "backgroundMain()");
         messageScrapper mS = new messageScrapper();
         Uri allMessage = Uri.parse("content://sms");
 
@@ -87,7 +93,7 @@ public class messagecheckpopup extends Activity {
         return sendMessage;
     }
 
-    public void mOnPopupClick (View v, int count, Intent sending) {// 누르면 팝업 하도록 하는 함수. messagecheckpopup.xml의 버튼에서 직접 선언
+    public void mOnPopupClick(int count, Intent sending) {// 누르면 팝업 하도록 하는 함수. messagecheckpopup.xml의 버튼에서 직접 선언
 
         Log.v("test", "mOnPopupClick()");
         String buttonNo = Integer.toString(count);
@@ -117,15 +123,22 @@ class DateModule {
 }
 
 class messageScrapper extends Activity {
+
+    TextView message;
+    TextView msgbody;
+
     String defineAndDistribute(int count, Cursor cursor) {
 
-        TextView message;
-        TextView msgbody;
+        Log.v("test", "DAD");
+        Log.v("test", Integer.toString(count));
+
 
         switch (count)
         {
             case 1:
+                Log.v("test", "case 1");
                 message = (TextView)findViewById(R.id.message_1);
+                Log.v("test", "part 1 txt");
                 String MessageInfo1 = getMessageLog(cursor);
                 message.setText(MessageInfo1);
                 String MessagePhNum1 = getmsNumber(cursor);
@@ -215,6 +228,8 @@ class messageScrapper extends Activity {
         StringBuilder sb = new StringBuilder();
 
         String msBody = managedCursor.getString(4);
+
+        sb.append(msBody);
 
         return sb.toString();
     }
