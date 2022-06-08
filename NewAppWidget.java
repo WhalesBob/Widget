@@ -24,7 +24,7 @@ public class NewAppWidget extends AppWidgetProvider {
 
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setComponent(new ComponentName(context, Settings.ACTION_WIFI_SETTINGS));
+        intent.setComponent(new ComponentName(context, MainActivity.class));
         PendingIntent pi = PendingIntent.getActivity(context,0,intent,0);
         views.setOnClickPendingIntent(R.id.appwidget_text, pi);
         // Instruct the widget manager to update the widget
