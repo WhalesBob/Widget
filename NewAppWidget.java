@@ -1,4 +1,4 @@
-package com.example.wifi;
+package com.example.ntw1;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
