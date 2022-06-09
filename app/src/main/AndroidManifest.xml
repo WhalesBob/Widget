@@ -3,6 +3,8 @@
     package="com.example.widgetproject">
 
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -21,6 +23,9 @@
         </activity>
         <activity android:name=".missedCallCheckDirectory.CallCheck" />
         <activity android:name=".soundDirectory.SoundActivity" />
+        <activity android:name=".goWifi.GoWifiActivity" />
+
+
 
         <receiver
             android:name=".AWProvider"
@@ -32,6 +37,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_configuration"/>
         </receiver>
+
         <service android:name=".BatteryService"></service>
     </application>
 </manifest>

@@ -14,6 +14,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.example.widgetproject.goWifi.GoWifiActivity;
 import com.example.widgetproject.missedCallCheckDirectory.CallCheck;
 import com.example.widgetproject.soundDirectory.SoundActivity;
 
@@ -24,6 +25,11 @@ public class AWProvider extends AppWidgetProvider {
     private static final String ACTION_BATTERY_UPDATE = "com.example.widgetproject.action.UPDATE";
     private static int batteryLevel = 0;
     private static String time = "";
+
+    // TopLeft : 부재중
+    // TodMiddle : 화면밝기
+    // TopRight : 와이파이 창
+    // BottomLeft : 메인창
 
     @Override
     public void onEnabled(Context context) { // 위젯 키면 나타나는 애.
@@ -131,14 +137,17 @@ public class AWProvider extends AppWidgetProvider {
         if(!fromAlarm){
             PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
 
-            PendingIntent[] pendingIntents = new PendingIntent[2];
-            for(int i = 0; i < 2; i++){
+            PendingIntent[] pendingIntents = new PendingIntent[3];
+            for(int i = 0; i < 3; i++){
                 pendingIntents[i] = PendingIntent.getActivity(context,0,intents[i],PendingIntent.FLAG_IMMUTABLE);
             }
 
             views.setOnClickPendingIntent(R.id.topLeftButton,pendingIntents[0]);
             views.setOnClickPendingIntent(R.id.topMiddleButton,pendingIntents[1]);
-            views.setOnClickPendingIntent(R.id.topRightButton,pendingIntent);
+            views.setOnClickPendingIntent(R.id.topRightButton,pendingIntents[2]);
+
+            views.setOnClickPendingIntent(R.id.bottomLeftButton,pendingIntent);
+
         }
 
         ComponentName componentName = new ComponentName(context,AWProvider.class);
@@ -157,9 +166,10 @@ public class AWProvider extends AppWidgetProvider {
         return (!time.equals(currentTimeLeft));
     }
     static Intent[] getIntents(Context context){
-        Intent[] intentArray = new Intent[2];
-        intentArray[0] = new Intent(context,CallCheck.class);
+        Intent[] intentArray = new Intent[3];
+        intentArray[0] = new Intent(context, CallCheck.class);
         intentArray[1] = new Intent(context, SoundActivity.class);
+        intentArray[2] = new Intent(context, GoWifiActivity.class);
 
         return intentArray;
     }

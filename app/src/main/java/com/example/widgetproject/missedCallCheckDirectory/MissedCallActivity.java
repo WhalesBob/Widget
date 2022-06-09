@@ -19,16 +19,10 @@ public class MissedCallActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 200;
 
-    Button btn_call_widget; // ?
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); // 화면 만들어 주었던 메소드이다. 얘만 고치면 되나...?
-//        setContentView(R.layout.view_layout);//main_activity 없이 view_layout으로
-
         Log.v("test", "onCreate");
-
-//        btn_call_widget = (Button)findViewById(R.id.btn_call_widget); // 안썼다.
 
         if(!checkPermission())//권한 유무 확인 및 없을 시 권한 요청 // 필요하다. 이건 CallCheck 로 넘겨줘서 처리해야 한다. 나머지는 필요없는부분이다.
         {
