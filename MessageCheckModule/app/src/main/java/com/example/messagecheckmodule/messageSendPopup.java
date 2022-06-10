@@ -1,5 +1,7 @@
 package com.example.messagecheckmodule;
 
+import static java.sql.Types.NULL;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +28,8 @@ public class messageSendPopup extends Activity {
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.v("test", "SendPopup onCreate()");
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.message_send_popup);
 
@@ -40,38 +44,35 @@ public class messageSendPopup extends Activity {
         String phNum = intent.getStringExtra(messageNum);
         Log.v("test", phNum);
         String messageToTxt = setTxtPhNum(phNum);
-        txt_to.setText(messageToTxt);
+        txt_to.setText(messageToTxt);//To. XXX-XXX-XXXX
 
-
-
-        btn_send_message.setOnClickListener(view -> Send_Message(phNum));
+        btn_send_message.setOnClickListener(view -> Send_Message(phNum));//송신 버튼 누르면 전송
     }
 
-    public void mOnClose (View v) {
+    public void mOnClose (View v) {//문자 보내기 창 닫기
+        Log.v("test", "mOnClose()");
         finish();
     }
 
     String setTxtPhNum (String messageTo)
     {
+        Log.v("test", "setTxtPhNum()");
         return "To. " + messageTo;
     }
 
-    void Send_Message (String phNum)
+    void Send_Message (String phNum)//문자 보내기
     {
+        Log.v("test", "Send_Message()");
         et_sendingtxt = (EditText)findViewById(R.id.et_sendingtxt);
         String inserted_message = et_sendingtxt.getText().toString();
         Log.v("test", inserted_message);
-        if (!inserted_message.equals("default"))
-        {
+        if (!(inserted_message.equals(""))) {
             SmsManager SMSM = SmsManager.getDefault();
             SMSM.sendTextMessage(phNum, null, inserted_message, null, null);
             Toast.makeText(getApplicationContext(), "전송 완료", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
+            finish();
+        } else {
             Toast.makeText(getApplicationContext(), "전송 실패", Toast.LENGTH_LONG).show();
         }
-
-        finish();
     }
 }

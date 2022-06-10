@@ -11,7 +11,7 @@ import java.util.Date;
 class messageScrapper extends Activity {
 
 
-    public String getMessageLog(Cursor managedCursor) {//가장 최근의 부재중 전화 정보를 전화번호, 날짜 등을 포함한 String 형태로 받아 오는 함수
+    public String getMessageLog(Cursor managedCursor) {//문자의 송신인, 날짜를 받아오는 함수
         Log.v("test", "getCallLog()");
 
         StringBuilder sb = new StringBuilder();
@@ -25,7 +25,7 @@ class messageScrapper extends Activity {
         return sb.toString();
     }
 
-    public String getmsNumber(Cursor managedCursor) {//가장 최근의 부재중 전화의 전화번호를 받아와 전화를 걸 수 있는 형식의 String으로 돌려 받는 함수
+    public String getmsNumber(Cursor managedCursor) {//문자를 보낸 사람의 전화번호를 받아 오는 함수
         Log.v("test", "getmsNumber()");
 
         StringBuilder sb = new StringBuilder();
@@ -36,7 +36,7 @@ class messageScrapper extends Activity {
         return sb.toString();
     }
 
-    public String getMessageBody(Cursor managedCursor) {//가장 최근의 부재중 전화 정보를 전화번호, 날짜 등을 포함한 String 형태로 받아 오는 함수
+    public String getMessageBody(Cursor managedCursor) {//문자 내용을 받아오는 함수
         Log.v("test", "getCallLog()");
 
         StringBuilder sb = new StringBuilder();

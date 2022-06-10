@@ -32,6 +32,7 @@ public class messagecheckpopup extends Activity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+        Log.v("test", "onCreate()");
         if(!checkPermission()) {
             Log.v("test", "no per");
             requestPermission();
@@ -70,14 +71,15 @@ public class messagecheckpopup extends Activity {
         return result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED;
     }
     private void requestPermission() {
-        Log.v("test","requestPermission");
+        Log.v("test","requestPermission()");
         ActivityCompat.requestPermissions(this, new String[]{READ_SMS, SEND_SMS}, PERMISSION_REQUEST_CODE);
     }
 
-    private Intent backgroundMain() {
+    private Intent backgroundMain() {//실질적인 작업 진행
         Log.v("test", "backgroundMain()");
 
-        Cursor managingCursor = getContentResolver().query(Telephony.Sms.Inbox.CONTENT_URI, new String[] {" _id", "address", "person" ,"date", "body"}, null, null, "date DESC");
+        Cursor managingCursor = getContentResolver().query(Telephony.Sms.Inbox.CONTENT_URI, new String[] {" _id", "address", "person" ,"date", "body"}, null, null, "date DESC");//SMS만 수신 가능
+        //MMS나 RCS는 확인 불가능
         Intent sendMessage = new Intent(this, messageSendPopup.class);
         int count=1;
         while(managingCursor.moveToNext()) {
@@ -114,12 +116,12 @@ public class messagecheckpopup extends Activity {
 
     String defineAndDistribute(int count, Cursor cursor) {
 
-        Log.v("test", "DAD");
+        Log.v("test", "defineAndDistribute()");
         Log.v("test", Integer.toString(count));
 
         messageScrapper mS = new messageScrapper();
 
-        switch (count)
+        switch (count)//위에서부터 차례대로 채워넣을 때 각 칸의 위치에 따라 분류하는 기능
         {
             case 1:
                 Log.v("test", "case 1");

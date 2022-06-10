@@ -15,7 +15,7 @@ public class messageCheckAppWidgetProvider extends AppWidgetProvider {
         Log.v("test", "onUpdate()");
 
         for (int appWidgetID : appWidgetIds) {
-            Intent intent = new Intent(context, messagecheckpopup.class);//MainActivity로 연결
+            Intent intent = new Intent(context, messagecheckpopup.class);//mssagecheckpopup.class로 연결
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);//flag 사용 안함
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.activity_main);
             views.setOnClickPendingIntent(R.id.btn_ms_widget, pendingIntent);
