@@ -1,5 +1,4 @@
 package com.example.widgetproject;
-import static android.Manifest.permission.READ_CALL_LOG;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -14,7 +13,10 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.example.widgetproject.goWifi.GoWifiActivity;
+import com.example.widgetproject.brightControlDirectory.BrightControlActivity;
+import com.example.widgetproject.goWifiAndData.GoDataActivity;
+import com.example.widgetproject.goWifiAndData.GoWifiActivity;
+import com.example.widgetproject.messageCheckDirectory.MessageCheckPopup;
 import com.example.widgetproject.missedCallCheckDirectory.CallCheck;
 import com.example.widgetproject.soundDirectory.SoundActivity;
 
@@ -25,11 +27,7 @@ public class AWProvider extends AppWidgetProvider {
     private static final String ACTION_BATTERY_UPDATE = "com.example.widgetproject.action.UPDATE";
     private static int batteryLevel = 0;
     private static String time = "";
-
-    // TopLeft : 부재중
-    // TodMiddle : 화면밝기
-    // TopRight : 와이파이 창
-    // BottomLeft : 메인창
+    private static final int NOTIFICATION_REQUEST_CODE = 0;
 
     @Override
     public void onEnabled(Context context) { // 위젯 키면 나타나는 애.
@@ -37,8 +35,6 @@ public class AWProvider extends AppWidgetProvider {
 
         Log.v("test","onEnabled()");
         turnAlarmOnOff(context,true);
-
-        context.startService(new Intent(context, BatteryService.class));
     }
 
     @Override
@@ -48,14 +44,13 @@ public class AWProvider extends AppWidgetProvider {
 
         for(int id : appWidgetIds){
             Intent[] intents = getIntents(context);
-            Intent intent = new Intent(context,MainActivity.class); // 여기서 MainActivity.class 를 받아서 Intent 를 생성함.
             int currentLevel = calculateBatteryLevel(context);
             String currentTime = getTime();
             if(batteryChanged(currentLevel) || timeChanged(currentTime)){
                 batteryLevel = currentLevel;
                 time = currentTime;
             }
-            updateViews(context,intent,intents,false);
+            updateViews(context,intents,false);
         }
     }
 
@@ -71,7 +66,7 @@ public class AWProvider extends AppWidgetProvider {
                 Log.v("test","Battery Changed!");
                 batteryLevel = currentLevel;
                 time = currentTime;
-                updateViews(context,intent,intents,false);
+                updateViews(context,intents,false);
             }
         }
     }
@@ -89,12 +84,7 @@ public class AWProvider extends AppWidgetProvider {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(Intent.ACTION_BATTERY_CHANGED);
         Intent[] intents = getIntents(context);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-//        if(Build.VERSION.SDK_INT >= 32){
-//            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_MUTABLE);
-//        }else{
-//            pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-//        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(context.getApplicationContext(),NOTIFICATION_REQUEST_CODE,intent,PendingIntent.FLAG_IMMUTABLE);
 
         if(turnOn){
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000,60 * 1000, pendingIntent);
@@ -105,7 +95,7 @@ public class AWProvider extends AppWidgetProvider {
                 Log.v("test","Something Changed!");
                 batteryLevel = currentLevel;
                 time = currentTime;
-                updateViews(context,intent,intents,true);
+                updateViews(context,intents,true);
             }else{
                 Log.v("test","Something is not Changed");
             }
@@ -127,7 +117,7 @@ public class AWProvider extends AppWidgetProvider {
         Log.v("test","Check Battery Change");
         return (batteryLevel != currentLevelLeft);
     }
-    private static void updateViews(Context context,Intent intent,Intent[] intents,boolean fromAlarm){
+    private static void updateViews(Context context,Intent[] intents,boolean fromAlarm){
 
         Log.v("test","updateViews()");
 
@@ -135,21 +125,21 @@ public class AWProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.battery, batteryLevel + "%");
         views.setTextViewText(R.id.SWETClock, time);
         if(!fromAlarm){
-            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_IMMUTABLE);
 
-            PendingIntent[] pendingIntents = new PendingIntent[3];
-            for(int i = 0; i < 3; i++){
+            PendingIntent[] pendingIntents = new PendingIntent[6];
+            for(int i = 0; i < 6; i++){
                 pendingIntents[i] = PendingIntent.getActivity(context,0,intents[i],PendingIntent.FLAG_IMMUTABLE);
             }
 
-            views.setOnClickPendingIntent(R.id.topLeftButton,pendingIntents[0]);
-            views.setOnClickPendingIntent(R.id.topMiddleButton,pendingIntents[1]);
-            views.setOnClickPendingIntent(R.id.topRightButton,pendingIntents[2]);
+            views.setOnClickPendingIntent(R.id.topLeftButton,pendingIntents[0]); // CallCheck
+            views.setOnClickPendingIntent(R.id.topMiddleButton,pendingIntents[1]); // SoundActivity
+            views.setOnClickPendingIntent(R.id.topRightButton,pendingIntents[2]); // GoWifiActivity
 
-            views.setOnClickPendingIntent(R.id.bottomLeftButton,pendingIntent);
+            views.setOnClickPendingIntent(R.id.bottomLeftButton,pendingIntents[3]); // GoDataActivity
+            views.setOnClickPendingIntent(R.id.bottomMiddleButton,pendingIntents[4]); // BrightControlActivity
+            views.setOnClickPendingIntent(R.id.bottomRightButton,pendingIntents[5]); // MessageCheckPopup
 
         }
-
         ComponentName componentName = new ComponentName(context,AWProvider.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetManager.updateAppWidget(componentName,views);
@@ -166,10 +156,13 @@ public class AWProvider extends AppWidgetProvider {
         return (!time.equals(currentTimeLeft));
     }
     static Intent[] getIntents(Context context){
-        Intent[] intentArray = new Intent[3];
+        Intent[] intentArray = new Intent[6];
         intentArray[0] = new Intent(context, CallCheck.class);
         intentArray[1] = new Intent(context, SoundActivity.class);
         intentArray[2] = new Intent(context, GoWifiActivity.class);
+        intentArray[3] = new Intent(context, GoDataActivity.class);
+        intentArray[4] = new Intent(context, BrightControlActivity.class);
+        intentArray[5] = new Intent(context, MessageCheckPopup.class);
 
         return intentArray;
     }

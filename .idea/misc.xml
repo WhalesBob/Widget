@@ -4,10 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/drawable/border.xml" value="0.1" />
+        <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/drawable/message_cancel_button.xml" value="0.1" />
         <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/brightcontrol.xml" value="0.15052083333333333" />
         <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/callcheckpopup.xml" value="0.264" />
         <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/callcheckuppopup.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/gowifi.xml" value="0.1" />
+        <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/message_send_popup.xml" value="0.1" />
+        <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/messagecheck.xml" value="0.264" />
         <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/soundcontrol.xml" value="0.536" />
         <entry key="..\:/Users/ndw82/AndroidStudioProjects/WidgetProject3/app/src/main/res/layout/widgetlayout.xml" value="0.264" />
       </map>

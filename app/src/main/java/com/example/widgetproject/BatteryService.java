@@ -32,18 +32,40 @@ public class BatteryService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startID){
+
         registerScreenOffReceiver();
         registerScreenOnReceiver();
         registerUserPresentReceiver();
+
+        makeForegroundNoti();
+
+        return START_NOT_STICKY;
+    }
+    private void makeForegroundNoti(){
+        Notification.Builder noti;
+
+        NotificationChannel nc = new NotificationChannel("channel","name",NotificationManager.IMPORTANCE_LOW);
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if(nm != null){
+            nm.createNotificationChannel(nc);
+        }
+        noti = new Notification.Builder(this,"channel");
+
+        noti.setSmallIcon(R.mipmap.ic_launcher);
+        noti.setContentTitle("효도 위젯서비스");
+        noti.setContentText("위젯서비스가 구동중입니다");
+        startForeground(1,noti.build());
     }
 
     public void onDestroy(){
         super.onDestroy();
+
         unregisterReceiver(screenOffReceiver);
         unregisterReceiver(screenOnReceiver);
         unregisterReceiver(userPresentReceiver);
+
+        stopForeground(true);
     }
 
     private void registerScreenOffReceiver(){

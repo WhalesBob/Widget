@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.widgetproject">
 
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:allowBackup="true"
@@ -23,9 +29,11 @@
         </activity>
         <activity android:name=".missedCallCheckDirectory.CallCheck" />
         <activity android:name=".soundDirectory.SoundActivity" />
-        <activity android:name=".goWifi.GoWifiActivity" />
-
-
+        <activity android:name=".goWifiAndData.GoWifiActivity" />
+        <activity android:name=".goWifiAndData.GoDataActivity" />
+        <activity android:name=".brightControlDirectory.BrightControlActivity" />
+        <activity android:name=".messageCheckDirectory.MessageCheckPopup" />
+        <activity android:name=".messageCheckDirectory.MessageSendPopup" />
 
         <receiver
             android:name=".AWProvider"
@@ -38,6 +46,6 @@
                 android:resource="@xml/widget_configuration"/>
         </receiver>
 
-        <service android:name=".BatteryService"></service>
+        <service android:name=".BatteryService" />
     </application>
 </manifest>
