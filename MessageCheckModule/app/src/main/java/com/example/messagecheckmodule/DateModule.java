@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 class DateModule {
-    String DateSimplifier(Date callDate) {
+    String DateSimplifier(Date callDate) {//날짜 읽기 쉽게
         Log.v("test", "DateSimplifier()");
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd E", Locale.KOREA);
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm a", Locale.KOREA);

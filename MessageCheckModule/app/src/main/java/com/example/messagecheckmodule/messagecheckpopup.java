@@ -33,7 +33,7 @@ public class messagecheckpopup extends Activity {
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         Log.v("test", "onCreate()");
-        if(!checkPermission()) {
+        if(!checkPermission()) {//권한 확인
             Log.v("test", "no per");
             requestPermission();
         }
@@ -50,13 +50,13 @@ public class messagecheckpopup extends Activity {
 
         Intent sending = backgroundMain();
 
-        sendTextBtn1 = (Button)findViewById(R.id.btn_msg_to_1);
+        sendTextBtn1 = (Button)findViewById(R.id.btn_msg_to_1);//보내기 버튼 선언
         sendTextBtn2 = (Button)findViewById(R.id.btn_msg_to_2);
         sendTextBtn3 = (Button)findViewById(R.id.btn_msg_to_3);
         sendTextBtn4 = (Button)findViewById(R.id.btn_msg_to_4);
         sendTextBtn5 = (Button)findViewById(R.id.btn_msg_to_5);
 
-        sendTextBtn1.setOnClickListener(view -> mOnPopupClick(1,sending));
+        sendTextBtn1.setOnClickListener(view -> mOnPopupClick(1,sending));//보내기 버튼 지정
         sendTextBtn2.setOnClickListener(view -> mOnPopupClick(2,sending));
         sendTextBtn3.setOnClickListener(view -> mOnPopupClick(3,sending));
         sendTextBtn4.setOnClickListener(view -> mOnPopupClick(4,sending));
@@ -64,13 +64,13 @@ public class messagecheckpopup extends Activity {
 
     }
 
-    private boolean checkPermission() {
+    private boolean checkPermission() {//권한 확인
         Log.v("test","checkPermission()");
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_SMS);
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), SEND_SMS);
         return result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED;
     }
-    private void requestPermission() {
+    private void requestPermission() {//권한 요청
         Log.v("test","requestPermission()");
         ActivityCompat.requestPermissions(this, new String[]{READ_SMS, SEND_SMS}, PERMISSION_REQUEST_CODE);
     }
@@ -85,7 +85,7 @@ public class messagecheckpopup extends Activity {
         while(managingCursor.moveToNext()) {
             String instantPhNum = defineAndDistribute(count, managingCursor);
             String currentMessage = "Message"+count;
-            sendMessage.putExtra(currentMessage, instantPhNum);
+            sendMessage.putExtra(currentMessage, instantPhNum);//특정 버튼을 눌렀을 때만 받아 올 수 있게
             if (count==5)
                 break;
             count = count+1;
@@ -100,7 +100,7 @@ public class messagecheckpopup extends Activity {
         Log.v("test", "mOnPopupClick()");
         String buttonNo = Integer.toString(count);
         String buttonName = "btn_from";
-        sending.putExtra(buttonName, buttonNo);
+        sending.putExtra(buttonName, buttonNo);//어느 버튼을 눌렀는지 송신
 
 
         startActivity(sending);//팝업 생성

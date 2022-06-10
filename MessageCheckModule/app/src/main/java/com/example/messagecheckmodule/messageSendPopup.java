@@ -54,7 +54,7 @@ public class messageSendPopup extends Activity {
         finish();
     }
 
-    String setTxtPhNum (String messageTo)
+    String setTxtPhNum (String messageTo)//To. XXX-XXX-XXXX로 변환
     {
         Log.v("test", "setTxtPhNum()");
         return "To. " + messageTo;
@@ -66,12 +66,12 @@ public class messageSendPopup extends Activity {
         et_sendingtxt = (EditText)findViewById(R.id.et_sendingtxt);
         String inserted_message = et_sendingtxt.getText().toString();
         Log.v("test", inserted_message);
-        if (!(inserted_message.equals(""))) {
+        if (!(inserted_message.equals(""))) {//보낼 내용이 비어있지 않다면 문자 보내고 전 화면으로
             SmsManager SMSM = SmsManager.getDefault();
             SMSM.sendTextMessage(phNum, null, inserted_message, null, null);
             Toast.makeText(getApplicationContext(), "전송 완료", Toast.LENGTH_LONG).show();
             finish();
-        } else {
+        } else {//보낼 내용이 없다면 전송 실패 메세지
             Toast.makeText(getApplicationContext(), "전송 실패", Toast.LENGTH_LONG).show();
         }
     }
