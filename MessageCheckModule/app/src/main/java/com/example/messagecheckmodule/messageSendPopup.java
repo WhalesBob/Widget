@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,6 +20,7 @@ public class messageSendPopup extends Activity {
 
     TextView txt_to;
     Button btn_send_message;
+    EditText et_sendingtxt;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -27,8 +29,6 @@ public class messageSendPopup extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.message_send_popup);
 
-        SMS_Sending SMS_S = new SMS_Sending();
-
         txt_to = (TextView)findViewById(R.id.txt_to);
 
         btn_send_message = (Button)findViewById(R.id.btn_send_message);
@@ -36,14 +36,15 @@ public class messageSendPopup extends Activity {
         Intent intent = getIntent();
         String messageTo = intent.getStringExtra("btn_from");
         int count = Integer.parseInt(messageTo);
-        String messageNum = "message"+count;
+        String messageNum = "Message"+count;
         String phNum = intent.getStringExtra(messageNum);
+        Log.v("test", phNum);
         String messageToTxt = setTxtPhNum(phNum);
         txt_to.setText(messageToTxt);
 
 
 
-        btn_send_message.setOnClickListener(view -> SMS_S.Send_Message(messageTo));
+        btn_send_message.setOnClickListener(view -> Send_Message(phNum));
     }
 
     public void mOnClose (View v) {
@@ -55,16 +56,11 @@ public class messageSendPopup extends Activity {
         return "To. " + messageTo;
     }
 
-}
-
-class SMS_Sending extends AppCompatActivity {
-
-    EditText et_sendingtxt;
-
     void Send_Message (String phNum)
     {
         et_sendingtxt = (EditText)findViewById(R.id.et_sendingtxt);
         String inserted_message = et_sendingtxt.getText().toString();
+        Log.v("test", inserted_message);
         if (!inserted_message.equals("default"))
         {
             SmsManager SMSM = SmsManager.getDefault();
@@ -75,5 +71,7 @@ class SMS_Sending extends AppCompatActivity {
         {
             Toast.makeText(getApplicationContext(), "전송 실패", Toast.LENGTH_LONG).show();
         }
+
+        finish();
     }
 }

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -18,26 +19,19 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 public class messagecheckpopup extends Activity {
     Button sendTextBtn1;
     Button sendTextBtn2;
     Button sendTextBtn3;
     Button sendTextBtn4;
     Button sendTextBtn5;
+    TextView message;
+    TextView msgbody;
 
     int PERMISSION_REQUEST_CODE = 201;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 바 제거
-        setContentView(R.layout.messagecheckpopup);
-
         if(!checkPermission()) {
             Log.v("test", "no per");
             requestPermission();
@@ -46,6 +40,13 @@ public class messagecheckpopup extends Activity {
         {
             Log.v("test", "yes per");
         }
+        super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 바 제거
+
+
+        setContentView(R.layout.messagecheckpopup);
+
         Intent sending = backgroundMain();
 
         sendTextBtn1 = (Button)findViewById(R.id.btn_msg_to_1);
@@ -75,21 +76,20 @@ public class messagecheckpopup extends Activity {
 
     private Intent backgroundMain() {
         Log.v("test", "backgroundMain()");
-        messageScrapper mS = new messageScrapper();
-        Uri allMessage = Uri.parse("content://sms");
 
-        Cursor managingCursor = getContentResolver().query(allMessage, new String[] {" _id", "address", "person" ,"date", "body"}, null, null, "date DESC");
+        Cursor managingCursor = getContentResolver().query(Telephony.Sms.Inbox.CONTENT_URI, new String[] {" _id", "address", "person" ,"date", "body"}, null, null, "date DESC");
         Intent sendMessage = new Intent(this, messageSendPopup.class);
         int count=1;
-        while(managingCursor.moveToNext())
-        {
-            String instantPhNum = mS.defineAndDistribute(count, managingCursor);
+        while(managingCursor.moveToNext()) {
+            String instantPhNum = defineAndDistribute(count, managingCursor);
             String currentMessage = "Message"+count;
             sendMessage.putExtra(currentMessage, instantPhNum);
             if (count==5)
                 break;
             count = count+1;
         }
+
+        managingCursor.close();
         return sendMessage;
     }
 
@@ -97,7 +97,7 @@ public class messagecheckpopup extends Activity {
 
         Log.v("test", "mOnPopupClick()");
         String buttonNo = Integer.toString(count);
-        String buttonName = "from_btn";
+        String buttonName = "btn_from";
         sending.putExtra(buttonName, buttonNo);
 
 
@@ -111,126 +111,77 @@ public class messagecheckpopup extends Activity {
         moveTaskToBack(true);
         finishAndRemoveTask();
     }
-}
-
-class DateModule {
-    String DateSimplifier(Date callDate) {
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd E", Locale.KOREA);
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm a", Locale.KOREA);
-        String simpleDate = ""+dateFormat1.format(callDate)+"요일  "+dateFormat2.format(callDate);
-        return simpleDate;
-    }
-}
-
-class messageScrapper extends Activity {
-
-    TextView message;
-    TextView msgbody;
 
     String defineAndDistribute(int count, Cursor cursor) {
 
         Log.v("test", "DAD");
         Log.v("test", Integer.toString(count));
 
+        messageScrapper mS = new messageScrapper();
 
         switch (count)
         {
             case 1:
                 Log.v("test", "case 1");
+                //message = (TextView)findViewById(R.id.message_1);
                 message = (TextView)findViewById(R.id.message_1);
                 Log.v("test", "part 1 txt");
-                String MessageInfo1 = getMessageLog(cursor);
+                String MessageInfo1 = mS.getMessageLog(cursor);
                 message.setText(MessageInfo1);
-                String MessagePhNum1 = getmsNumber(cursor);
+                String MessagePhNum1 = mS.getmsNumber(cursor);
+                Log.v("test", MessagePhNum1);
 
                 msgbody=(TextView)findViewById(R.id.msgbody_1);
-                String MessageBody1 = getMessageBody(cursor);
+                String MessageBody1 = mS.getMessageBody(cursor);
                 msgbody.setText(MessageBody1);
 
                 return MessagePhNum1;
             case 2:
                 message = (TextView)findViewById(R.id.message_2);
-                String MessageInfo2 = getMessageLog(cursor);
+                String MessageInfo2 = mS.getMessageLog(cursor);
                 message.setText(MessageInfo2);
-                String MessagePhNum2 = getmsNumber(cursor);
+                String MessagePhNum2 = mS.getmsNumber(cursor);
 
                 msgbody=(TextView)findViewById(R.id.msgbody_2);
-                String MessageBody2 = getMessageBody(cursor);
+                String MessageBody2 = mS.getMessageBody(cursor);
                 msgbody.setText(MessageBody2);
 
                 return MessagePhNum2;
             case 3:
                 message = (TextView)findViewById(R.id.message_3);
-                String MessageInfo3 = getMessageLog(cursor);
+                String MessageInfo3 = mS.getMessageLog(cursor);
                 message.setText(MessageInfo3);
-                String MessagePhNum3 = getmsNumber(cursor);
+                String MessagePhNum3 = mS.getmsNumber(cursor);
 
                 msgbody=(TextView)findViewById(R.id.msgbody_3);
-                String MessageBody3 = getMessageBody(cursor);
+                String MessageBody3 = mS.getMessageBody(cursor);
                 msgbody.setText(MessageBody3);
 
                 return MessagePhNum3;
             case 4:
                 message = (TextView)findViewById(R.id.message_4);
-                String MessageInfo4 = getMessageLog(cursor);
+                String MessageInfo4 = mS.getMessageLog(cursor);
                 message.setText(MessageInfo4);
-                String MessagePhNum4 = getmsNumber(cursor);
+                String MessagePhNum4 = mS.getmsNumber(cursor);
 
                 msgbody=(TextView)findViewById(R.id.msgbody_4);
-                String MessageBody4 = getMessageBody(cursor);
+                String MessageBody4 = mS.getMessageBody(cursor);
                 msgbody.setText(MessageBody4);
 
                 return MessagePhNum4;
             case 5:
                 message = (TextView)findViewById(R.id.message_5);
-                String MessageInfo5 = getMessageLog(cursor);
+                String MessageInfo5 = mS.getMessageLog(cursor);
                 message.setText(MessageInfo5);
-                String MessagePhNum5 = getmsNumber(cursor);
+                String MessagePhNum5 = mS.getmsNumber(cursor);
 
                 msgbody=(TextView)findViewById(R.id.msgbody_5);
-                String MessageBody5 = getMessageBody(cursor);
+                String MessageBody5 = mS.getMessageBody(cursor);
                 msgbody.setText(MessageBody5);
 
                 return MessagePhNum5;
             default:
                 return "error";
         }
-    }
-
-    private String getMessageLog(Cursor managedCursor) {//가장 최근의 부재중 전화 정보를 전화번호, 날짜 등을 포함한 String 형태로 받아 오는 함수
-        Log.v("test", "getCallLog()");
-
-        StringBuilder sb = new StringBuilder();
-        DateModule DM = new DateModule();
-        String msSender = managedCursor.getString(2);
-        long msDate = managedCursor.getLong(3);
-        Date msGotDate = new Date(Long.valueOf(msDate));
-
-        sb.append("송신자: ").append(msSender).append("\n날짜: ").append(DM.DateSimplifier(msGotDate));
-
-        return sb.toString();
-    }
-
-    private String getmsNumber(Cursor managedCursor) {//가장 최근의 부재중 전화의 전화번호를 받아와 전화를 걸 수 있는 형식의 String으로 돌려 받는 함수
-        Log.v("test", "getmsNumber()");
-
-        StringBuilder sb = new StringBuilder();
-
-        String msPhNum = managedCursor.getString(1);
-        sb.append(msPhNum);
-
-        return sb.toString();
-    }
-
-    private String getMessageBody(Cursor managedCursor) {//가장 최근의 부재중 전화 정보를 전화번호, 날짜 등을 포함한 String 형태로 받아 오는 함수
-        Log.v("test", "getCallLog()");
-
-        StringBuilder sb = new StringBuilder();
-
-        String msBody = managedCursor.getString(4);
-
-        sb.append(msBody);
-
-        return sb.toString();
     }
 }
