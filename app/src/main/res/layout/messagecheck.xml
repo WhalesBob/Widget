@@ -69,7 +69,7 @@
                     android:textColor="#000000"
                     android:text="확인"
                     android:layout_gravity="right"
-                    android:onClick="mOnClose"
+                    android:onClick="mOnClosed"
                     />
             </LinearLayout>
 

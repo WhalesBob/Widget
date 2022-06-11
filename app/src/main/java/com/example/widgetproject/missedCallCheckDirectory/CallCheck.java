@@ -40,12 +40,6 @@ public class CallCheck extends Activity {
         txtView = (TextView) findViewById(R.id.txtView);
         btn_call_to = (Button) findViewById(R.id.btn_call_to);
 
-        if(!checkPermission())
-        {
-            requestPermission();
-        }
-
-
         String recentMissedCall = getCallLog();
         txtView.setText(recentMissedCall);
         String missedPhNum = getphNumber();//부재중 전화의 전화번호를 수신

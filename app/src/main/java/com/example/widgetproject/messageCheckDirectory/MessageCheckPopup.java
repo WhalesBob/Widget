@@ -33,19 +33,10 @@ public class MessageCheckPopup extends Activity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
-        Log.v("test", "onCreate()");
-        if(!checkPermission()) {//권한 확인
-            Log.v("test", "no per");
-            requestPermission();
-        }
-        else
-        {
-            Log.v("test", "yes per");
-        }
+
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 바 제거
-
 
         setContentView(R.layout.messagecheck);
 
@@ -63,17 +54,6 @@ public class MessageCheckPopup extends Activity {
         sendTextBtn4.setOnClickListener(view -> mOnPopupClick(4,sending));
         sendTextBtn5.setOnClickListener(view -> mOnPopupClick(5,sending));
 
-    }
-
-    private boolean checkPermission() {//권한 확인
-        Log.v("test","checkPermission()");
-        int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_SMS);
-        int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), SEND_SMS);
-        return result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED;
-    }
-    private void requestPermission() {//권한 요청
-        Log.v("test","requestPermission()");
-        ActivityCompat.requestPermissions(this, new String[]{READ_SMS, SEND_SMS}, PERMISSION_REQUEST_CODE);
     }
 
     private Intent backgroundMain() {//실질적인 작업 진행
